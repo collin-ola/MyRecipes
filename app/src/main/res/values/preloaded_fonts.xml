@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/taviraj</item>
+        <item>@font/taviraj_bold</item>
+        <item>@font/taviraj_medium</item>
+        <item>@font/taviraj_semibold</item>
+        <item>@font/taviraj_thin</item>
+    </array>
+</resources>

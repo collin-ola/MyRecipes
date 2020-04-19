@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">My Recipes</string>
+    <string name="submit">Submit</string>
+    <string name="register">Register</string>
+    <string name="please_enter_your_details_below">Please enter your details below.</string>
+    <string name="transparent_background">Transparent Background</string>
+    <string name="name">Name</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="e_mail_address">E-Mail Address</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="background_spoons">Background Spoons</string>
 </resources>
