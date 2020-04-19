@@ -33,6 +33,7 @@
         android:background="@drawable/round_button"
         android:clickable="true"
         android:enabled="true"
+        android:focusable="true"
         android:fontFamily="@font/taviraj"
         android:text="@string/register"
         android:textAllCaps="false"
@@ -50,8 +51,9 @@
         android:ems="10"
         android:fontFamily="@font/taviraj"
         android:hint="@string/password"
+        android:importantForAutofill="no"
         android:inputType="textPassword"
-        android:textSize="14sp"
+        android:textSize="@dimen/HintTextSize"
         app:layout_constraintBottom_toTopOf="@+id/loginButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -96,13 +98,14 @@
         android:fontFamily="@font/taviraj"
         android:hint="@string/username"
         android:inputType="textPersonName"
-        android:textSize="14sp"
+        android:textSize="@dimen/HintTextSize"
         app:layout_constraintBottom_toTopOf="@+id/loginButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.518" />
+        app:layout_constraintVertical_bias="0.518"
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/facebookLogin"

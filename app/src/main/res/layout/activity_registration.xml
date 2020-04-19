@@ -9,16 +9,17 @@
 
     <ImageView
         android:id="@+id/transparentBgImageView"
-        android:layout_width="341dp"
-        android:layout_height="633dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="363dp"
+        android:layout_height="595dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="32dp"
         android:alpha="0.75"
         android:contentDescription="@string/transparent_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
         app:srcCompat="@android:drawable/screen_background_light" />
 
     <TextView
@@ -29,7 +30,7 @@
         android:fontFamily="@font/taviraj"
         android:text="@string/register"
         android:textColor="#000000"
-        android:textSize="30sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/transparentBgImageView"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="@+id/transparentBgImageView"
@@ -39,10 +40,11 @@
         android:id="@+id/detailsTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/taviraj"
         android:text="@string/please_enter_your_details_below"
         android:textColor="#7C7B7B"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/transparentBgImageView"
         app:layout_constraintStart_toStartOf="@+id/transparentBgImageView"
         app:layout_constraintTop_toBottomOf="@+id/registerTextView" />
@@ -75,7 +77,7 @@
         android:textColor="#000000"
         android:textColorHighlight="#FFA500"
         android:textColorLink="#976200"
-        android:textSize="16sp"
+        android:textSize="@dimen/HintTextSize"
         app:layout_constraintBottom_toTopOf="@+id/pwTextView"
         app:layout_constraintEnd_toEndOf="@+id/transparentBgImageView"
         app:layout_constraintStart_toStartOf="@+id/transparentBgImageView" />
@@ -94,7 +96,7 @@
         android:textColor="#000000"
         android:textColorHighlight="#FFA500"
         android:textColorLink="#976200"
-        android:textSize="16sp"
+        android:textSize="@dimen/HintTextSize"
         app:layout_constraintBottom_toTopOf="@+id/confirmPwTextView"
         app:layout_constraintEnd_toEndOf="@+id/transparentBgImageView"
         app:layout_constraintStart_toStartOf="@+id/transparentBgImageView" />
@@ -114,7 +116,7 @@
         android:textColor="#000000"
         android:textColorHighlight="#FFA500"
         android:textColorLink="#976200"
-        android:textSize="14sp"
+        android:textSize="@dimen/HintTextSize"
         app:layout_constraintBottom_toTopOf="@+id/usernameTextView"
         app:layout_constraintEnd_toEndOf="@+id/transparentBgImageView"
         app:layout_constraintStart_toStartOf="@+id/transparentBgImageView"
@@ -135,7 +137,7 @@
         android:textColor="#000000"
         android:textColorHighlight="#FFA500"
         android:textColorLink="#976200"
-        android:textSize="16sp"
+        android:textSize="@dimen/HintTextSize"
         app:layout_constraintBottom_toTopOf="@+id/emailTextView"
         app:layout_constraintEnd_toEndOf="@+id/transparentBgImageView"
         app:layout_constraintStart_toStartOf="@+id/transparentBgImageView" />
@@ -155,10 +157,20 @@
         android:textColor="#000000"
         android:textColorHighlight="#FFA500"
         android:textColorLink="#976200"
-        android:textSize="16sp"
+        android:textSize="@dimen/HintTextSize"
         app:layout_constraintBottom_toTopOf="@+id/submitButton"
         app:layout_constraintEnd_toEndOf="@+id/transparentBgImageView"
         app:layout_constraintStart_toStartOf="@+id/transparentBgImageView" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="73dp"
+        android:layout_height="91dp"
+        app:layout_constraintBottom_toTopOf="@+id/transparentBgImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/my_recipes" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
