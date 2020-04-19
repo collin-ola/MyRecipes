@@ -4,6 +4,161 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/spoons"
     tools:context=".RegistrationActivity">
+
+    <ImageView
+        android:id="@+id/transparentBgImageView"
+        android:layout_width="341dp"
+        android:layout_height="633dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        android:alpha="0.75"
+        android:contentDescription="@string/transparent_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/screen_background_light" />
+
+    <TextView
+        android:id="@+id/registerTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/taviraj"
+        android:text="@string/register"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="@+id/transparentBgImageView"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/transparentBgImageView"
+        app:layout_constraintTop_toTopOf="@+id/transparentBgImageView" />
+
+    <TextView
+        android:id="@+id/detailsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/taviraj"
+        android:text="@string/please_enter_your_details_below"
+        android:textColor="#7C7B7B"
+        app:layout_constraintEnd_toEndOf="@+id/transparentBgImageView"
+        app:layout_constraintStart_toStartOf="@+id/transparentBgImageView"
+        app:layout_constraintTop_toBottomOf="@+id/registerTextView" />
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="167dp"
+        android:layout_height="36dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/round_button"
+        android:fontFamily="@font/taviraj"
+        android:text="@string/submit"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/transparentBgImageView"
+        app:layout_constraintEnd_toEndOf="@+id/transparentBgImageView"
+        app:layout_constraintStart_toStartOf="@+id/transparentBgImageView" />
+
+    <EditText
+        android:id="@+id/emailTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:autofillHints="Please enter your e-mail address."
+        android:fontFamily="@font/taviraj"
+        android:hint="@string/e_mail_address"
+        android:inputType="textEmailAddress"
+        android:textColor="#000000"
+        android:textColorHighlight="#FFA500"
+        android:textColorLink="#976200"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/pwTextView"
+        app:layout_constraintEnd_toEndOf="@+id/transparentBgImageView"
+        app:layout_constraintStart_toStartOf="@+id/transparentBgImageView" />
+
+    <EditText
+        android:id="@+id/pwTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:autofillHints="Please enter your password."
+        android:fontFamily="@font/taviraj"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:textColor="#000000"
+        android:textColorHighlight="#FFA500"
+        android:textColorLink="#976200"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/confirmPwTextView"
+        app:layout_constraintEnd_toEndOf="@+id/transparentBgImageView"
+        app:layout_constraintStart_toStartOf="@+id/transparentBgImageView" />
+
+    <EditText
+        android:id="@+id/nameTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:autofillHints="Please enter your name."
+        android:fontFamily="@font/taviraj"
+        android:hint="@string/name"
+        android:inputType="text"
+        android:textColor="#000000"
+        android:textColorHighlight="#FFA500"
+        android:textColorLink="#976200"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/usernameTextView"
+        app:layout_constraintEnd_toEndOf="@+id/transparentBgImageView"
+        app:layout_constraintStart_toStartOf="@+id/transparentBgImageView"
+        app:layout_constraintTop_toBottomOf="@+id/detailsTextView"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/usernameTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:autofillHints="Please enter a username."
+        android:fontFamily="@font/taviraj"
+        android:hint="@string/username"
+        android:inputType="text"
+        android:textColor="#000000"
+        android:textColorHighlight="#FFA500"
+        android:textColorLink="#976200"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/emailTextView"
+        app:layout_constraintEnd_toEndOf="@+id/transparentBgImageView"
+        app:layout_constraintStart_toStartOf="@+id/transparentBgImageView" />
+
+
+    <EditText
+        android:id="@+id/confirmPwTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="56dp"
+        android:autofillHints="Please confirm your password."
+        android:fontFamily="@font/taviraj"
+        android:hint="@string/confirm_password"
+        android:inputType="textPassword"
+        android:textColor="#000000"
+        android:textColorHighlight="#FFA500"
+        android:textColorLink="#976200"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/submitButton"
+        app:layout_constraintEnd_toEndOf="@+id/transparentBgImageView"
+        app:layout_constraintStart_toStartOf="@+id/transparentBgImageView" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
