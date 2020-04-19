@@ -74,12 +74,13 @@
         android:src="@drawable/my_recipes"/>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/forgottenPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="8dp"
+        android:clickable="true"
         android:fontFamily="@font/taviraj"
         android:text="@string/forgotten_password"
         android:textSize="12sp"

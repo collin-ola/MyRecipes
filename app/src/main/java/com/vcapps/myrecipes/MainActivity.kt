@@ -12,7 +12,13 @@ class MainActivity : AppCompatActivity() {
         this.supportActionBar!!.hide()
         setContentView(R.layout.activity_main)
 
-        registerButton.setOnClickListener () {
+        registerButton.setOnClickListener {
+
+            val intent = Intent(this, RegistrationActivity::class.java)
+            startActivity(intent)
+        }
+
+        forgottenPassword.setOnClickListener {
 
             val intent = Intent(this, RegistrationActivity::class.java)
             startActivity(intent)
