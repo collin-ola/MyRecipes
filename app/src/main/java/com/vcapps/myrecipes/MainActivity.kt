@@ -14,6 +14,8 @@ class MainActivity : AppCompatActivity() {
 
         registerButton.setOnClickListener () {
 
+
+
             val intent = Intent(this, RegistrationActivity::class.java)
             startActivity(intent)
         }
