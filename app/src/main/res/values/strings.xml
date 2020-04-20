@@ -16,4 +16,5 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="e_mail_address">E-Mail Address</string>
     <string name="background_spoons">Background Spoons</string>
+    <string name="myrecipe_logo">MyRecipe Logo</string>
 </resources>
