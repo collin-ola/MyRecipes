@@ -19,7 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewLogo"
         app:srcCompat="@android:drawable/screen_background_light" />
 
     <TextView
@@ -163,10 +163,12 @@
         app:layout_constraintStart_toStartOf="@+id/transparentBgImageView" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageViewLogo"
         android:layout_width="73dp"
         android:layout_height="91dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/myrecipe_logo"
         app:layout_constraintBottom_toTopOf="@+id/transparentBgImageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
