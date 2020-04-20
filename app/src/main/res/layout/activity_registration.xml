@@ -9,17 +9,15 @@
 
     <ImageView
         android:id="@+id/transparentBgImageView"
-        android:layout_width="363dp"
-        android:layout_height="595dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="32dp"
+        android:layout_width="358dp"
+        android:layout_height="658dp"
         android:alpha="0.75"
         android:contentDescription="@string/transparent_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewLogo"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/screen_background_light" />
 
     <TextView
@@ -54,6 +52,7 @@
         android:layout_width="167dp"
         android:layout_height="36dp"
         android:layout_marginBottom="24dp"
+        android:alpha="0.9"
         android:background="@drawable/round_button"
         android:fontFamily="@font/taviraj"
         android:text="@string/submit"
@@ -163,12 +162,11 @@
         app:layout_constraintStart_toStartOf="@+id/transparentBgImageView" />
 
     <ImageView
-        android:id="@+id/imageViewLogo"
-        android:layout_width="73dp"
-        android:layout_height="91dp"
+        android:id="@+id/logoImageView"
+        android:layout_width="154dp"
+        android:layout_height="173dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:contentDescription="@string/myrecipe_logo"
+        android:contentDescription="@string/logo"
         app:layout_constraintBottom_toTopOf="@+id/transparentBgImageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
