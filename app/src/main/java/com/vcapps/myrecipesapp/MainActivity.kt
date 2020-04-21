@@ -1,4 +1,4 @@
-package com.vcapps.myrecipes
+package com.vcapps.myrecipesapp
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
             // Create a new user with a first and last name
             val user = hashMapOf(
-                "first" to "Ada",
+                "first" to "Vicky",
                 "last" to "Lovelace",
                 "born" to 1815
             )

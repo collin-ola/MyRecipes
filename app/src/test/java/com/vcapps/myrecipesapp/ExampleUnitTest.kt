@@ -1,4 +1,4 @@
-package com.vcapps.myrecipes
+package com.vcapps.myrecipesapp
 
 import org.junit.Test
 
