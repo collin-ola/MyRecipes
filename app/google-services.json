@@ -1,42 +1,42 @@
 {
   "project_info": {
-    "project_number": "400706775871",
-    "firebase_url": "https://myrecipes-9acfa.firebaseio.com",
-    "project_id": "myrecipes-9acfa",
-    "storage_bucket": "myrecipes-9acfa.appspot.com"
+    "project_number": "210274482739",
+    "firebase_url": "https://myrecipesapp-2df02.firebaseio.com",
+    "project_id": "myrecipesapp-2df02",
+    "storage_bucket": "myrecipesapp-2df02.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:400706775871:android:99700774edb89b9496018a",
+        "mobilesdk_app_id": "1:210274482739:android:cac859cd998a0825400146",
         "android_client_info": {
-          "package_name": "com.vcapps.myrecipes"
+          "package_name": "com.vcapps.myrecipesapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "400706775871-v41lgkh6n8ahrv20ip7pcltp3jucc9n7.apps.googleusercontent.com",
+          "client_id": "210274482739-hpi4vge0f9o56al471bjg2rrc8vj13v7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.vcapps.myrecipes",
-            "certificate_hash": "666284de0568909bd5c788ed13b72a5ae9c0befc"
+            "package_name": "com.vcapps.myrecipesapp",
+            "certificate_hash": "cd91c440186ea621236017b71a88b1439ea4ab8f"
           }
         },
         {
-          "client_id": "400706775871-51r8qqf1eb8hhbbo1u3fe2nuopgfkqb2.apps.googleusercontent.com",
+          "client_id": "210274482739-nelkh01k4jdpprq4kmiv0641tf4a8j7p.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB2Ajj7lXA6pTqEjzKfzcyhRqv65i91Ccw"
+          "current_key": "AIzaSyAgMbBv52zbDga92NHVRVOLpfAKGXG1V8M"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "400706775871-51r8qqf1eb8hhbbo1u3fe2nuopgfkqb2.apps.googleusercontent.com",
+              "client_id": "210274482739-nelkh01k4jdpprq4kmiv0641tf4a8j7p.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

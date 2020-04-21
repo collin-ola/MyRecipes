@@ -1,10 +1,7 @@
-package com.vcapps.myrecipes
+package com.vcapps.myrecipesapp
 
-import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.view.Window
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_registration.*
 
