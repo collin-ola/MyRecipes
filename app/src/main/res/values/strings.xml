@@ -17,4 +17,7 @@
     <string name="e_mail_address">E-Mail Address</string>
     <string name="background_spoons">Background Spoons</string>
     <string name="myrecipe_logo">MyRecipe Logo</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="enter_your_e_mail_address_below_to_reset_password">Enter your e-mail address below to reset password</string>
+    <string name="send">Send</string>
 </resources>
