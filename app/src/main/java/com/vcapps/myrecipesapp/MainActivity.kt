@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.EditText
+import android.widget.Toast
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
@@ -16,39 +18,71 @@ class MainActivity : AppCompatActivity() {
             supportActionBar?.hide()
         setContentView(R.layout.activity_main)
 
-        val TAG = "COLLINS"
+        loginButton.setOnClickListener {
+            val userNameText = usernameTextView.text.toString()
+            val userPasswordText = passwordTextView.text.toString()
+
+            loginButton(userNameText,userPasswordText)
+        }
 
         registerButton.setOnClickListener {
 
-            val db = Firebase.firestore
-
-            // Create a new user with a first and last name
-            val user = hashMapOf(
-                "first" to "Collins",
-                "last" to "Lovelace",
-                "born" to 1815
-            )
-
-            /* Add a new document with a generated ID
-            db.collection("users")
-                .add(user)
-                .addOnSuccessListener { documentReference ->
-                    Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-                }
-                .addOnFailureListener { e ->
-                    Log.w(TAG, "Error adding document", e)
-                }
-              */
-
-            val intent = Intent(this, RegistrationActivity::class.java)
+           val intent = Intent(this, RegistrationActivity::class.java)
             startActivity(intent)
         }
 
         forgottenPassword.setOnClickListener {
 
-            val intent = Intent(this, RegistrationActivity::class.java)
+            val intent = Intent(this, ForgottenPassword::class.java)
             startActivity(intent)
         }
     }
 
+    fun loginButton(userNameText:String, userPasswordText:String){
+
+        if(userNameText.trim() == "" || userPasswordText.trim() == ""){
+            makeToast("Please enter your details.")
+
+        return
+        }
+
+        val TAG = "COLLINS"
+
+            //Create an instance of Firebase database
+            val db = Firebase.firestore
+
+            db.collection("myRecipeUsers").document(userNameText)
+                .get()
+                .addOnSuccessListener { document ->
+
+                    if (document.data != null) {
+                        val passwordStored = document["password"].toString()
+                        val usernameStored = document["username"].toString();
+
+                        if(checkPassword(userPasswordText, passwordStored)) {
+                            makeToast("Logged in. Welcome $usernameStored")
+                            /*val intent = Intent(this, ForgottenPassword::class.java)
+                            startActivity(intent)*/
+                        } else {
+                            makeToast("Login failed. Try again")
+                        }
+
+                    } else {
+                        makeToast("This user does not exist, Please register")
+                    }
+                }
+
+            .addOnFailureListener { exception ->
+                    Log.w(TAG, "Error getting documents: ", exception)
+                }            
+            }
+
+
+    private fun checkPassword(userPw: String, dbPw: String) :Boolean = userPw==dbPw
+
+    private fun makeToast(toastText :String){
+        Toast.makeText(applicationContext, toastText, Toast.LENGTH_LONG).show()
+    }
+
 }
+
