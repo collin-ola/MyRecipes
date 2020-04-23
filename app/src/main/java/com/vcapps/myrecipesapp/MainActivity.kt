@@ -74,9 +74,9 @@ class MainActivity : AppCompatActivity() {
 
             .addOnFailureListener { exception ->
                     Log.w(TAG, "Error getting documents: ", exception)
-                }
-
+                }            
             }
+
 
     private fun checkPassword(userPw: String, dbPw: String) :Boolean = userPw==dbPw
 
