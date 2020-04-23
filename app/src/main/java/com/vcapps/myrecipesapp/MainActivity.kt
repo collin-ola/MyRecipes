@@ -24,12 +24,12 @@ class MainActivity : AppCompatActivity() {
 
             // Create a new user with a first and last name
             val user = hashMapOf(
-                "first" to "Vicky",
+                "first" to "Collins",
                 "last" to "Lovelace",
                 "born" to 1815
             )
 
-            // Add a new document with a generated ID
+            /* Add a new document with a generated ID
             db.collection("users")
                 .add(user)
                 .addOnSuccessListener { documentReference ->
@@ -38,9 +38,10 @@ class MainActivity : AppCompatActivity() {
                 .addOnFailureListener { e ->
                     Log.w(TAG, "Error adding document", e)
                 }
+              */
 
-            //val intent = Intent(this, RegistrationActivity::class.java)
-            //startActivity(intent)
+            val intent = Intent(this, RegistrationActivity::class.java)
+            startActivity(intent)
         }
 
         forgottenPassword.setOnClickListener {
