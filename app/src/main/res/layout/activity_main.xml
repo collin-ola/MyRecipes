@@ -58,7 +58,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usernameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/emailTextView"
         app:layout_constraintVertical_bias="0.106" />
 
     <ImageView
@@ -66,7 +66,7 @@
         android:layout_width="309dp"
         android:layout_height="192dp"
         android:contentDescription="@string/logo"
-        app:layout_constraintBottom_toTopOf="@+id/usernameTextView"
+        app:layout_constraintBottom_toTopOf="@+id/emailTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -93,21 +93,21 @@
         android:focusable="true" />
 
     <EditText
-        android:id="@+id/usernameTextView"
+        android:id="@+id/emailTextView"
         android:layout_width="282dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:fontFamily="@font/taviraj"
-        android:hint="@string/username"
-        android:inputType="textPersonName"
+        android:hint="@string/emailAddress"
+        android:importantForAutofill="no"
+        android:inputType="textEmailAddress"
         android:textSize="@dimen/HintTextSize"
         app:layout_constraintBottom_toTopOf="@+id/loginButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.518"
-        android:importantForAutofill="no" />
+        app:layout_constraintVertical_bias="0.518" />
 
     <Button
         android:id="@+id/facebookLogin"

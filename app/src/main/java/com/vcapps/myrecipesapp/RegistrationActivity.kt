@@ -1,5 +1,6 @@
 package com.vcapps.myrecipesapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -37,7 +38,8 @@ class RegistrationActivity : AppCompatActivity() {
             val mru = MyRecipeUser(name!!, username!!, emailAddress!!, password!!, confirmPassword!!)
 
             if(validate(mru))
-                register(mru)
+                mru.registerUser("standard")
+                //register(mru)
         }
     }
 
@@ -64,7 +66,7 @@ class RegistrationActivity : AppCompatActivity() {
             "password" to mrUser.password
         )
 
-        db.collection("myRecipeUsers").document(mrUser.username)
+        db.collection("myRecipeUsers").document(mrUser.emailAddress!!)
             .set(user)
             .addOnSuccessListener {
                 Log.d(TAG, "Document has been added")
@@ -74,13 +76,15 @@ class RegistrationActivity : AppCompatActivity() {
                 Log.w(TAG, "Error adding document: ", e)
                 makeToast("There has a registration error. Please re-install the app and try again.")
             }
-    }
-}
 
-class MyRecipeUser (var _name: String, var _username: String, var _eMailAddress: String, var _password: String, var _confirmPassword: String) {
-    var name = _name
-    var username = _username
-    var emailAddress = _eMailAddress
-    var password = _password
-    var confirmPassword = _confirmPassword
+        returnResult(mrUser.emailAddress!!)
+    }
+
+    private fun returnResult(emailAddress :String) {
+        val data = Intent().apply {
+            putExtra("email", emailAddress)
+        }
+        setResult(ResultCodes.resultCodeOK, data)
+        finish()
+    }
 }
