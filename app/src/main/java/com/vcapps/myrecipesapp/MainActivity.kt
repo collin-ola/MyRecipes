@@ -1,6 +1,5 @@
 package com.vcapps.myrecipesapp
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -20,11 +19,12 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
 
-object ResultCodes {
-    const val resultCodeOK = 0
-    //const val resultCodeNotOK = 1
-    const val resultCodeSignIn = 2
-    const val resultCodeRegister = 3
+object RequestCodes {
+    const val requestCodeOK = 0
+    //const val requestCodeNotOK = 1
+    const val requestCodeSignIn = 2
+    const val requestCodeRegister = 3
+    const val requestCodeFacebook = 64206
 }
 
 class MainActivity : AppCompatActivity() {
@@ -82,13 +82,13 @@ class MainActivity : AppCompatActivity() {
                 .build()
 
             val googleSignInClient = GoogleSignIn.getClient(this, gso)
-            startActivityForResult(googleSignInClient.signInIntent, ResultCodes.resultCodeSignIn)
+            startActivityForResult(googleSignInClient.signInIntent, RequestCodes.requestCodeSignIn)
         }
 
         registerButton.setOnClickListener {
            val intent = Intent(this, RegistrationActivity::class.java)
             //startActivity(intent)
-            startActivityForResult(intent, ResultCodes.resultCodeRegister)
+            startActivityForResult(intent, RequestCodes.requestCodeRegister)
         }
 
         forgottenPassword.setOnClickListener {
@@ -191,7 +191,7 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == ResultCodes.resultCodeSignIn) {
+        if (requestCode == RequestCodes.requestCodeSignIn) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 // Google Sign In was successful, authenticate with Firebase
@@ -203,13 +203,16 @@ class MainActivity : AppCompatActivity() {
                 Log.w(TAG, "Google sign in failed", e)
                 // ...
             }
-        } else if (requestCode == ResultCodes.resultCodeRegister) {
+        } else if (requestCode == RequestCodes.requestCodeRegister) {
             Log.d(TAG, "Returned with e-mail address. Code is $requestCode")
-            if(resultCode == ResultCodes.resultCodeOK && data != null)
+            if(resultCode == RequestCodes.requestCodeOK && data != null)
                 data.apply {
                     val email = getStringExtra("email")
                     emailTextView.setText(email)
                 }
+        } else if (requestCode == RequestCodes.requestCodeFacebook) {
+            TODO("Uncomment the below")
+            //callbackManager.onActivityResult(requestCode, resultCode, data)
         }
     }
 
