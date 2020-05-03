@@ -84,7 +84,7 @@ class RegistrationActivity : AppCompatActivity() {
         val data = Intent().apply {
             putExtra("email", emailAddress)
         }
-        setResult(ResultCodes.resultCodeOK, data)
+        setResult(RequestCodes.requestCodeOK, data)
         finish()
     }
 }
