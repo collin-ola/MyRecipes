@@ -22,4 +22,6 @@
     <string name="send">Send</string>
     <string name="wcid">210274482739-lj6dtk3vagj7ndhqo9hlvpgakahf3n38.apps.googleusercontent.com</string>
     <string name="emailAddress">E-Mail Address</string>
+    <string name="facebook_app_id">464498940997795</string>
+    <string name="fb_login_protocol_scheme">fb464498940997795</string>
 </resources>
