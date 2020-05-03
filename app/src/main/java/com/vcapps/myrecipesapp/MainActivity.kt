@@ -97,11 +97,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        callbackManager.onActivityResult(requestCode, resultCode, data)
-        super.onActivityResult(requestCode, resultCode, data)
-
-    }
 
     private fun loginButton(userEmailText:String, userPasswordText:String){
         if(userEmailText.trim() == "" || userPasswordText.trim() == ""){
@@ -211,8 +206,7 @@ class MainActivity : AppCompatActivity() {
                     emailTextView.setText(email)
                 }
         } else if (requestCode == RequestCodes.requestCodeFacebook) {
-            TODO("Uncomment the below")
-            //callbackManager.onActivityResult(requestCode, resultCode, data)
+            callbackManager.onActivityResult(requestCode, resultCode, data)
         }
     }
 
