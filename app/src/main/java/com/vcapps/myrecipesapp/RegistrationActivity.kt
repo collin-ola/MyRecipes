@@ -3,10 +3,7 @@ package com.vcapps.myrecipesapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_registration.*
 
 //Global tag used for logging
@@ -37,9 +34,11 @@ class RegistrationActivity : AppCompatActivity() {
 
             val mru = MyRecipeUser(name!!, username!!, emailAddress!!, password!!, confirmPassword!!)
 
-            if(validate(mru))
+            if(validate(mru)) {
                 mru.registerUser("standard")
-                //register(mru)
+                returnResult(mru.emailAddress)
+                makeToast("Standard user registration complete.")
+            }
         }
     }
 
@@ -54,30 +53,6 @@ class RegistrationActivity : AppCompatActivity() {
         } else {
             true
         }
-    }
-
-    private fun register(mrUser: MyRecipeUser) {
-        val db = Firebase.firestore
-
-        val user = hashMapOf(
-            "name" to mrUser.name,
-            "username" to mrUser.username,
-            "emailAddress" to mrUser.emailAddress,
-            "password" to mrUser.password
-        )
-
-        db.collection("myRecipeUsers").document(mrUser.emailAddress!!)
-            .set(user)
-            .addOnSuccessListener {
-                Log.d(TAG, "Document has been added")
-                makeToast("Registration complete. Welcome ${mrUser.name}!")
-            }
-            .addOnFailureListener { e ->
-                Log.w(TAG, "Error adding document: ", e)
-                makeToast("There has a registration error. Please re-install the app and try again.")
-            }
-
-        returnResult(mrUser.emailAddress!!)
     }
 
     private fun returnResult(emailAddress :String) {
