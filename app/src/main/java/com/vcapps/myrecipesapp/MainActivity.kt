@@ -1,6 +1,7 @@
 package com.vcapps.myrecipesapp
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -56,9 +57,8 @@ class MainActivity : AppCompatActivity() {
                         val email = `object`.getString("email")
                         val img = `object`.getJSONObject("picture").getJSONObject("data").getString("url")
 
-                        Log.d(TAG, "facebook name: $name")
-                        Log.d(TAG, "facebook email: $email")
-                        Log.d(TAG, "facebook image: $img")
+                        val fbUser = MyRecipeUser(name,"",email,"","", Uri.parse(img))
+                        fbUser.registerUser("facebook")
                     }
                   
                     startActivity(facebookIntent)
@@ -145,8 +145,6 @@ class MainActivity : AppCompatActivity() {
 
             .addOnFailureListener { exception ->
              Log.w(TAG, "Error getting documents: ", exception)
-
-              //  }
 
             }
     }

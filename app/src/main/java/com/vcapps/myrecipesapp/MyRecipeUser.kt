@@ -32,7 +32,8 @@ class MyRecipeUser(var _name: String?, var _username: String?, var _eMailAddress
             "facebook" -> {
                 user = hashMapOf(
                     "name" to name,
-                    "emailAddress" to emailAddress
+                    "emailAddress" to emailAddress,
+                    "photo" to photoUrl
                 )
             }
 
