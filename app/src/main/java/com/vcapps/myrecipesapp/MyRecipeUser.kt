@@ -42,7 +42,8 @@ class MyRecipeUser(var _name: String?, var _username: String?, var _eMailAddress
                     "name" to name,
                     "username" to username,
                     "emailAddress" to emailAddress,
-                    "password" to password
+                    "password" to password,
+                    "forgotten_pw" to "false"
                     )
             }
         }
