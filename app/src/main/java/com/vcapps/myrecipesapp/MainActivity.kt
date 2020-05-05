@@ -5,9 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.auth.api.signin.*
-import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.*
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -15,10 +12,18 @@ import com.facebook.GraphRequest
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
+import org.json.JSONObject
+import java.util.*
+
 
 object RequestCodes {
     const val requestCodeOK = 0
@@ -40,11 +45,45 @@ class MainActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         callbackManager = CallbackManager.Factory.create()
 
+        val facebookIntent = Intent(this, RegistrationActivity::class.java)
+        val facebookLoginButton = findViewById<LoginButton>(R.id.facebookLogin)
+        facebookLoginButton.setPermissions(listOf("email","public_profile"))
+        facebookLoginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+                override fun onSuccess(loginResult: LoginResult) {
+                    val request = GraphRequest.newMeRequest(loginResult.accessToken) { `object`, _ ->
+                        // Application code
+                        val name = `object`.getString("name")
+                        val email = `object`.getString("email")
+                        val img = `object`.getJSONObject("picture").getJSONObject("data").getString("url")
+
+                        Log.d(TAG, "facebook name: $name")
+                        Log.d(TAG, "facebook email: $email")
+                        Log.d(TAG, "facebook image: $img")
+                    }
+                  
+                    startActivity(facebookIntent)
+
+                    val parameters = Bundle()
+                    parameters.putString("fields", "id, name, email, picture.type(large)")
+                    request.parameters = parameters
+                    request.executeAsync()
+                }
+
+                override fun onCancel() {
+                    Log.d(TAG, "facebook:onCancel")
+                }
+
+                override fun onError(error: FacebookException?) {
+                    Log.d(TAG, "facebook:onError", error)
+                }
+
+            })
+
         if (supportActionBar != null)
             supportActionBar?.hide()
         setContentView(R.layout.activity_main)
 
-       auth = FirebaseAuth.getInstance()
+        auth = FirebaseAuth.getInstance()
 
         loginButton.setOnClickListener {
             val userEmailText = emailTextView.text.toString()
@@ -53,7 +92,7 @@ class MainActivity : AppCompatActivity() {
             loginButton(userEmailText, userPasswordText)
         }
 
-        googleLogin.setOnClickListener{
+        googleLogin.setOnClickListener {
             val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.wcid))
                 .requestEmail()
@@ -65,7 +104,7 @@ class MainActivity : AppCompatActivity() {
 
         registerButton.setOnClickListener {
            val intent = Intent(this, RegistrationActivity::class.java)
-            startActivityForResult(intent, RequestCodes.requestCodeRegister)
+           startActivityForResult(intent, RequestCodes.requestCodeRegister)
         }
 
         forgottenPassword.setOnClickListener {
@@ -74,40 +113,43 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun loginButton(userEmailText:String, userPasswordText:String){
-        if(userEmailText.trim() == "" || userPasswordText.trim() == ""){
+    private fun loginButton(userEmailText: String, userPasswordText: String) {
+        if (userEmailText.trim() == "" || userPasswordText.trim() == "") {
+
             makeToast("Please enter your details.")
-        return
+            return
         }
-            //Create an instance of Firebase database
-            val db = Firebase.firestore
+        //Create an instance of Firebase database
+        val db = Firebase.firestore
 
-            db.collection("myRecipeUsers").document(userEmailText)
-                .get()
-                .addOnSuccessListener { document ->
+        db.collection("myRecipeUsers").document(userEmailText)
+            .get()
+            .addOnSuccessListener { document ->
 
-                    if (document.data != null) {
-                        val passwordStored = document["password"].toString()
-                        val userEmailStored = document["emailAddress"].toString();
-
-                        if(checkPassword(userPasswordText, passwordStored)) {
-                            makeToast("Logged in. Welcome $userEmailStored")
-                            //TODO: Take user to their home page, once it's been created
-                            /*val intent = Intent(this, ForgottenPassword::class.java)
-                            startActivity(intent)*/
-                        } else {
-                            makeToast("Login failed. Try again")
-                        }
-
+                if (document.data != null) {
+                    val passwordStored = document["password"].toString()
+                    val userEmailStored = document["emailAddress"].toString();
+                  
+                    if (checkPassword(userPasswordText, passwordStored)) {
+                        makeToast("Logged in. Welcome $userEmailStored")
+                        /*val intent = Intent(this, ForgottenPassword::class.java)
+                          startActivity(intent)*/
                     } else {
-                        makeToast("This user does not exist, Please register")
+                        makeToast("Login failed. Try again")
                     }
-                }
 
-            .addOnFailureListener { exception ->
-                    Log.w(TAG, "Error getting documents: ", exception)
+                } else {
+                    makeToast("This user does not exist, Please register")
                 }
             }
+
+            .addOnFailureListener { exception ->
+             Log.w(TAG, "Error getting documents: ", exception)
+
+              //  }
+
+            }
+    }
 
     private fun loginGoogle(mru: MyRecipeUser) {
         //Create an instance of Firebase database
@@ -151,7 +193,7 @@ class MainActivity : AppCompatActivity() {
             }
         } else if (requestCode == RequestCodes.requestCodeRegister) {
             Log.d(TAG, "Returned with e-mail address. Code is $requestCode")
-            if(resultCode == RequestCodes.requestCodeOK && data != null)
+            if (resultCode == RequestCodes.requestCodeOK && data != null)
                 data.apply {
                     val email = getStringExtra("email")
                     emailTextView.setText(email)
@@ -169,16 +211,18 @@ class MainActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
                     val user: FirebaseUser? = auth.currentUser
-                        Log.d(TAG, "User details: ${user?.displayName}")
-                        Log.d(TAG, "User details: ${user?.email}")
-                        Log.d(TAG, "User details: ${user?.photoUrl}")
+                    Log.d(TAG, "User details: ${user?.displayName}")
+                    Log.d(TAG, "User details: ${user?.email}")
+                    Log.d(TAG, "User details: ${user?.photoUrl}")
+
 
                     val mru = MyRecipeUser(user?.displayName,"", user?.email,"","", user?.photoUrl )
                         //updateUI(user)
+                  
                     if (user != null) {
                         loginGoogle(mru)
                     }
-                        makeToast("Authentication is successful. Welcome ${user?.displayName}")
+                    makeToast("Authentication is successful. Welcome ${user?.displayName}")
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
@@ -187,7 +231,7 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    private fun checkPassword(userPw: String, dbPw: String) :Boolean = userPw==dbPw
+    private fun checkPassword(userPw: String, dbPw: String): Boolean = userPw == dbPw
 
     /*override fun onStart() {
         super.onStart()
@@ -202,4 +246,5 @@ class MainActivity : AppCompatActivity() {
     fun makeToast(toastText :String) = Toast.makeText(applicationContext, toastText, Toast.LENGTH_LONG).show()
 
 }
+
 
