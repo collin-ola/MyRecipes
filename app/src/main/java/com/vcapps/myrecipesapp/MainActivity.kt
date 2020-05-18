@@ -160,8 +160,8 @@ class MainActivity : AppCompatActivity() {
                     val userEmailStored = document["emailAddress"].toString();
                     makeToast("User $userEmailStored will now be taken to their home page")
                     //TODO: Take user to their home page, once it's been created
-                    /*val intent = Intent(this, ForgottenPassword::class.java)
-                    startActivity(intent)*/
+                    val intent = Intent(this, ProfileActivity::class.java)
+                    startActivity(intent)
                 } else {
                     //Register an account for the google user
                     mru.registerUser("google")
