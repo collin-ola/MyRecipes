@@ -22,7 +22,7 @@
             android:id="@+id/imageViewProfilePicture"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="Profile Picture"
+            android:contentDescription="@string/profile_picture"
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.6"
-        android:contentDescription="Background Image"
+        android:contentDescription="@string/background_image"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/oval_profile"
-            android:contentDescription="User Bio"
+            android:contentDescription="@string/user_bio"
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -67,9 +67,9 @@
             android:id="@+id/textViewHi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:text="Lady Victoria"
+            android:text="@string/lady_victoria"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -78,28 +78,28 @@
             android:id="@+id/textViewBio"
             android:layout_width="213dp"
             android:layout_height="51dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="30dp"
             android:inputType="textMultiLine"
             android:maxLines="3"
-            android:text="This is a biography that contains some interesting info " />
+            android:text="@string/this_is_a_biography_that_contains_some_interesting_info" />
 
         <TextView
             android:id="@+id/textViewPostsNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="85dp"
-            android:text="124"
+            android:text="@string/_124"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textViewPostsText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
+            android:layout_marginStart="40dp"
             android:layout_marginTop="85dp"
-            android:text="Recipes" />
+            android:text="@string/recipes" />
     </androidx.cardview.widget.CardView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -109,9 +109,8 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
         android:clickable="true"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/plus" />
-
-
+        app:srcCompat="@drawable/plus"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
