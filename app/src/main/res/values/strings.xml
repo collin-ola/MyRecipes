@@ -24,4 +24,20 @@
     <string name="emailAddress">E-Mail Address</string>
     <string name="facebook_app_id">464498940997795</string>
     <string name="fb_login_protocol_scheme">fb464498940997795</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="background_image">Background Image</string>
+    <string name="user_bio">User Bio</string>
+    <string name="lady_victoria">Lady Victoria</string>
+    <string name="this_is_a_biography_that_contains_some_interesting_info">This is a biography that contains some interesting info</string>
+    <string name="_124">124</string>
+    <string name="recipes">Recipes</string>
 </resources>
