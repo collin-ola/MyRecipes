@@ -163,15 +163,13 @@ class MainActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { document ->
                 if (document.data != null) {
-                    val userEmailStored = document["emailAddress"].toString();
-                    makeToast("User $userEmailStored will now be taken to their home page")
-                    //TODO: Take user to their home page, once it's been created
+                    //val userEmailStored = document["emailAddress"].toString();
+                    Log.v(TAG, "Just before intent")
                     val intent = Intent(this, ProfileActivity::class.java)
                     startActivity(intent)
                 } else {
                     //Register an account for the google user
                     mru.registerUser("google")
-                    makeToast("Google user registration complete.")
                 }
             }
             .addOnFailureListener { exception ->
@@ -181,6 +179,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
+        Log.v(TAG, "In OAR...")
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RequestCodes.requestCodeSignIn) {
@@ -221,12 +221,13 @@ class MainActivity : AppCompatActivity() {
 
 
                     val mru = MyRecipeUser(user?.displayName,"", user?.email,"","", user?.photoUrl )
+                    Log.v(TAG, "Created MRU")
                         //updateUI(user)
                   
                     if (user != null) {
+                        Log.d(TAG, "Google login....")
                         loginGoogle(mru)
                     }
-                    makeToast("Authentication is successful. Welcome ${user?.displayName}")
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
