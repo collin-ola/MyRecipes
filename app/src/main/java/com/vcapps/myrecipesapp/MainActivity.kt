@@ -83,7 +83,6 @@ class MainActivity : AppCompatActivity() {
             supportActionBar?.hide()
         setContentView(R.layout.activity_main)
 
-        auth = FirebaseAuth.getInstance()
 
 //*********************** Login Button onclick Listners *****************************
         loginButton.setOnClickListener {
@@ -114,15 +113,50 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-//********************* Facebook User Login **********************************
+//********************* User Login **********************************
 
-    private fun loginButton(userEmailText: String, userPasswordText: String) {
-        if (userEmailText.trim() == "" || userPasswordText.trim() == "") {
+   private fun loginButton(userEmailText: String, userPasswordText: String) {
+       if (userEmailText.trim() == "" || userPasswordText.trim() == "") {
 
-            makeToast("Please enter your details.")
-            return
-        }
-        //Create an instance of Firebase database
+           makeToast("Please enter your details.")
+           return
+       }
+
+       auth.signInWithEmailAndPassword(userEmailText, userPasswordText)
+           .addOnCompleteListener(this) { task ->
+               if (task.isSuccessful) {
+                   // Sign in success, update UI with the signed-in user's information
+                   Log.d(TAG, "signInWithEmail:success")
+                   val intent = Intent(this, ProfileActivity::class.java)
+                   intent.putExtra("userEmailAddress", userEmailText)
+                   startActivity(intent)
+
+               } else {
+                   // If sign in fails, display a message to the user.
+                   Log.w(TAG, "signInWithEmail:failure", task.exception)
+               }
+           }
+           .addOnFailureListener(this){
+               makeToast("Error: ${it.message}")
+           }
+/*
+       val user = FirebaseAuth.getInstance().currentUser
+
+       user!!.updateEmail(userEmailText)
+           .addOnCompleteListener{task ->
+               if (task.isSuccessful) {
+                   Log.d(TAG, "User email address updated.")
+               }
+           }
+       user!!.updatePassword(userPasswordText)
+           .addOnCompleteListener{task ->
+               if (task.isSuccessful) {
+                   Log.d(TAG, "User password updated.")
+                   startActivity(intent)
+               }
+           }*/
+   }
+       /* //Create an instance of Firebase database
         val db = Firebase.firestore
 
         db.collection("myRecipeUsers").document(userEmailText)
@@ -151,7 +185,8 @@ class MainActivity : AppCompatActivity() {
              Log.w(TAG, "Error getting documents: ", exception)
 
             }
-    }
+    }*/
+
 
 //************************* Google login **********************************
 

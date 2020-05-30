@@ -2,6 +2,7 @@ package com.vcapps.myrecipesapp
 
 import android.net.Uri
 import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -14,11 +15,12 @@ class MyRecipeUser(var _name: String?, var _username: String?, var _eMailAddress
     var confirmPassword = _confirmPassword.toString()
     var photoUrl = _photoUrl.toString()
 
+    private lateinit var auth: FirebaseAuth
 
     fun registerUser(accountType: String) { //types standard, google, facebook
         //Initialize database
         val db = Firebase.firestore
-        lateinit var user : HashMap<String, String>
+        lateinit var user: HashMap<String, String>
 
         when (accountType) {
             "google" -> {
@@ -35,7 +37,16 @@ class MyRecipeUser(var _name: String?, var _username: String?, var _eMailAddress
                     "emailAddress" to emailAddress,
                     "photo" to photoUrl
                 )
+                db.collection("myRecipeUsers").document(emailAddress)
+                    .set(user)
+                    .addOnSuccessListener {
+                        Log.d(TAG, "Document has been added")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w(TAG, "Error adding document: ", e)
+                    }
             }
+
 
             "standard" -> {
                 user = hashMapOf(
@@ -44,17 +55,10 @@ class MyRecipeUser(var _name: String?, var _username: String?, var _eMailAddress
                     "emailAddress" to emailAddress,
                     "password" to password,
                     "forgotten_pw" to "false"
-                    )
+                )
             }
-        }
 
-        db.collection("myRecipeUsers").document(emailAddress)
-            .set(user)
-            .addOnSuccessListener {
-                Log.d(TAG, "Document has been added")
-            }
-            .addOnFailureListener { e ->
-                Log.w(TAG, "Error adding document: ", e)
-            }
+        }
     }
+
 }
