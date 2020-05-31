@@ -6,8 +6,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class MyRecipeUser(var _username: String?, var _eMailAddress: String?, var _password: String?, var _confirmPassword: String?, var _photoUrl: Uri? = null) {
 
+class MyRecipeUser(var _username: String?, var _eMailAddress: String?, var _password: String?, var _confirmPassword: String?, var _photoUrl: Uri? = null) {
+    
     var username = _username.toString()
     var emailAddress = _eMailAddress.toString()
     var password = _password.toString()

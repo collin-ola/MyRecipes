@@ -109,6 +109,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
 //********************* User Login **********************************
 
    private fun loginButton(userEmailText: String, userPasswordText: String) {
@@ -160,6 +161,8 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+        Log.v(TAG, "In OAR...")
+
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RequestCodes.requestCodeSignIn) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
@@ -200,6 +203,7 @@ class MainActivity : AppCompatActivity() {
 
                     makeToast("Login Successful")
 
+
                     if (user != null) {
                         val intent = Intent(this, ProfileActivity::class.java)
                         startActivity(intent)
@@ -213,7 +217,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     //Check to see if a user is already logged in via google. If so, log them in automatically
-    fun makeToast(toastText :String) = Toast.makeText(applicationContext, toastText, Toast.LENGTH_LONG).show()
+    private fun makeToast(toastText :String) = Toast.makeText(applicationContext, toastText, Toast.LENGTH_LONG).show()
 
 }
 
