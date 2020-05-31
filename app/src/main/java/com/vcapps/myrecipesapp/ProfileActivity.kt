@@ -21,7 +21,7 @@ class ProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
-
+       
         val userEmail: String? = intent.getStringExtra("userEmailAddress")
 
         //Create rounded profile picture//
@@ -33,28 +33,6 @@ class ProfileActivity : AppCompatActivity() {
         btnAddRecipe.setOnClickListener{
             createTestRecipe(userEmail!!)
         }
-    }
-
-    private fun getRecipes(userEmail:String) {
-        //recipeList = findViewById(R.id.recipe_list_view)
-        db.collection("myRecipes").document("French Toast")
-            .get()
-            .addOnSuccessListener { document ->
-
-                if (document.data != null) {
-                    val recipeTitle = document["Title"].toString()
-                    val recipeDesc = document["Description"].toString();
-
-                    makeToast("Got the Recipe! $recipeTitle")
-                } else {
-                    makeToast("This recipe does not exist.")
-                }
-            }
-
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents: ", exception)
-
-            }
     }
 
     private fun createTestRecipe(userEmail :String){

@@ -2,59 +2,39 @@ package com.vcapps.myrecipesapp
 
 import android.net.Uri
 import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class MyRecipeUser(_name: String?, _username: String?, _eMailAddress: String?, _password: String?, _confirmPassword: String?, _photoUrl: Uri? = null) {
 
-    var name = _name.toString()
+class MyRecipeUser(var _username: String?, var _eMailAddress: String?, var _password: String?, var _confirmPassword: String?, var _photoUrl: Uri? = null) {
+    
     var username = _username.toString()
     var emailAddress = _eMailAddress.toString()
     var password = _password.toString()
     var confirmPassword = _confirmPassword.toString()
     var photoUrl = _photoUrl.toString()
 
+    private lateinit var auth: FirebaseAuth
 
-    fun registerUser(accountType: String) { //types standard, google, facebook
+    fun registerFacebookUser(accountType: String) { //types standard, google, facebook
         //Initialize database
         val db = Firebase.firestore
-        lateinit var user : HashMap<String, String>
-
-        when (accountType) {
-            "google" -> {
+        lateinit var user: HashMap<String, String>
                 user = hashMapOf(
-                    "name" to name,
+                    "name" to username,
                     "emailAddress" to emailAddress,
                     "photo" to photoUrl
                 )
-            }
+                db.collection("myRecipeUsers").document(emailAddress)
+                    .set(user)
+                    .addOnSuccessListener {
+                        Log.d(TAG, "Document has been added")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w(TAG, "Error adding document: ", e)
+                    }
 
-            "facebook" -> {
-                user = hashMapOf(
-                    "name" to name,
-                    "emailAddress" to emailAddress,
-                    "photo" to photoUrl
-                )
-            }
-
-            "standard" -> {
-                user = hashMapOf(
-                    "name" to name,
-                    "username" to username,
-                    "emailAddress" to emailAddress,
-                    "password" to password,
-                    "forgotten_pw" to "false"
-                    )
-            }
         }
-
-        db.collection("myRecipeUsers").document(emailAddress)
-            .set(user)
-            .addOnSuccessListener {
-                Log.d(TAG, "Document has been added")
-            }
-            .addOnFailureListener { e ->
-                Log.w(TAG, "Error adding document: ", e)
-            }
     }
-}
+

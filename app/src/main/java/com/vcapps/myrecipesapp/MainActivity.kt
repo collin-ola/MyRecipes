@@ -10,7 +10,6 @@ import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.GraphRequest
-import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -22,13 +21,10 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
-import org.json.JSONObject
-import java.util.*
 
 
 object RequestCodes {
     const val requestCodeOK = 0
-    //const val requestCodeNotOK = 1
     const val requestCodeSignIn = 2
     const val requestCodeRegister = 3
     const val requestCodeFacebook = 64206
@@ -57,8 +53,8 @@ class MainActivity : AppCompatActivity() {
                         val email = `object`.getString("email")
                         val img = `object`.getJSONObject("picture").getJSONObject("data").getString("url")
 
-                        val fbUser = MyRecipeUser(name,"",email,"","", Uri.parse(img))
-                        fbUser.registerUser("facebook")
+                        val fbUser = MyRecipeUser(name,email,"","", Uri.parse(img))
+                        fbUser.registerFacebookUser("facebook")
                     }
                   
                     startActivity(facebookIntent)
@@ -83,7 +79,6 @@ class MainActivity : AppCompatActivity() {
             supportActionBar?.hide()
         setContentView(R.layout.activity_main)
 
-        auth = FirebaseAuth.getInstance()
 
 //*********************** Login Button onclick Listners *****************************
         loginButton.setOnClickListener {
@@ -114,68 +109,54 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-//********************* Facebook User Login **********************************
 
-    private fun loginButton(userEmailText: String, userPasswordText: String) {
-        if (userEmailText.trim() == "" || userPasswordText.trim() == "") {
+//********************* User Login **********************************
 
-            makeToast("Please enter your details.")
-            return
-        }
-        //Create an instance of Firebase database
-        val db = Firebase.firestore
+   private fun loginButton(userEmailText: String, userPasswordText: String) {
+       if (userEmailText.trim() == "" || userPasswordText.trim() == "") {
 
-        db.collection("myRecipeUsers").document(userEmailText)
-            .get()
-            .addOnSuccessListener { document ->
+           makeToast("Please enter your details.")
+           return
+       }
 
-                if (document.data != null) {
-                    val passwordStored = document["password"].toString()
-                    val userEmailStored = document["emailAddress"].toString();
-                  
-                    if (checkPassword(userPasswordText, passwordStored)) {
-                        makeToast("Logged in. Welcome $userEmailStored")
-                        val intent = Intent(this, ProfileActivity::class.java)
-                        intent.putExtra("userEmailAddress", userEmailStored)
-                        startActivity(intent)
-                    } else {
-                        makeToast("Login failed. Try again")
-                    }
+       auth.signInWithEmailAndPassword(userEmailText, userPasswordText)
+           .addOnCompleteListener(this) { task ->
+               if (task.isSuccessful) {
+                   // Sign in success, update UI with the signed-in user's information
+                   Log.d(TAG, "signInWithEmail:success")
+                   makeToast("Logged in. Welcome $userEmailText")
+                   val intent = Intent(this, ProfileActivity::class.java)
+                   intent.putExtra("userEmailAddress", userEmailText)
+                   startActivity(intent)
 
-                } else {
-                    makeToast("This user does not exist, Please register")
-                }
-            }
+               } else {
+                   // If sign in fails, display a message to the user.
+                   makeToast("Login failed. Try again")
+                   Log.w(TAG, "signInWithEmail:failure", task.exception)
+               }
+           }
+           .addOnFailureListener(this) {
+               makeToast("Error: ${it.message}")
+           }
 
-            .addOnFailureListener { exception ->
-             Log.w(TAG, "Error getting documents: ", exception)
+       //******************* User settings ***********************
+/*
+       val user = FirebaseAuth.getInstance().currentUser
 
-            }
-    }
-
-//************************* Google login **********************************
-
-    private fun loginGoogle(mru: MyRecipeUser) {
-        //Create an instance of Firebase database
-        val db = Firebase.firestore
-
-        db.collection("myRecipeUsers").document(mru.emailAddress)
-            .get()
-            .addOnSuccessListener { document ->
-                if (document.data != null) {
-                    //val userEmailStored = document["emailAddress"].toString();
-                    Log.v(TAG, "Just before intent")
-                    val intent = Intent(this, ProfileActivity::class.java)
-                    startActivity(intent)
-                } else {
-                    //Register an account for the google user
-                    mru.registerUser("google")
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents: ", exception)
-            }
-    }
+       user!!.updateEmail(userEmailText)
+           .addOnCompleteListener{task ->
+               if (task.isSuccessful) {
+                   Log.d(TAG, "User email address updated.")
+               }
+           }
+       user!!.updatePassword(userPasswordText)
+           .addOnCompleteListener{task ->
+               if (task.isSuccessful) {
+                   Log.d(TAG, "User password updated.")
+                   startActivity(intent)
+               }
+           }*/
+   }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -193,7 +174,6 @@ class MainActivity : AppCompatActivity() {
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e)
-                // ...
             }
         } else if (requestCode == RequestCodes.requestCodeRegister) {
             Log.d(TAG, "Returned with e-mail address. Code is $requestCode")
@@ -207,6 +187,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //**************** Google login ***********************
+
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
@@ -219,14 +201,12 @@ class MainActivity : AppCompatActivity() {
                     Log.d(TAG, "User details: ${user?.email}")
                     Log.d(TAG, "User details: ${user?.photoUrl}")
 
+                    makeToast("Login Successful")
 
-                    val mru = MyRecipeUser(user?.displayName,"", user?.email,"","", user?.photoUrl )
-                    Log.v(TAG, "Created MRU")
-                        //updateUI(user)
-                  
+
                     if (user != null) {
-                        Log.d(TAG, "Google login....")
-                        loginGoogle(mru)
+                        val intent = Intent(this, ProfileActivity::class.java)
+                        startActivity(intent)
                     }
                 } else {
                     // If sign in fails, display a message to the user.
@@ -235,8 +215,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
     }
-
-    private fun checkPassword(userPw: String, dbPw: String): Boolean = userPw == dbPw
 
     //Check to see if a user is already logged in via google. If so, log them in automatically
     private fun makeToast(toastText :String) = Toast.makeText(applicationContext, toastText, Toast.LENGTH_LONG).show()
