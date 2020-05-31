@@ -127,18 +127,22 @@ class MainActivity : AppCompatActivity() {
                if (task.isSuccessful) {
                    // Sign in success, update UI with the signed-in user's information
                    Log.d(TAG, "signInWithEmail:success")
+                   makeToast("Logged in. Welcome $userEmailText")
                    val intent = Intent(this, ProfileActivity::class.java)
                    intent.putExtra("userEmailAddress", userEmailText)
                    startActivity(intent)
 
                } else {
                    // If sign in fails, display a message to the user.
+                   makeToast("Login failed. Try again")
                    Log.w(TAG, "signInWithEmail:failure", task.exception)
                }
            }
-           .addOnFailureListener(this){
+           .addOnFailureListener(this) {
                makeToast("Error: ${it.message}")
            }
+
+       //******************* User settings ***********************
 /*
        val user = FirebaseAuth.getInstance().currentUser
 
@@ -156,37 +160,6 @@ class MainActivity : AppCompatActivity() {
                }
            }*/
    }
-       /* //Create an instance of Firebase database
-        val db = Firebase.firestore
-
-        db.collection("myRecipeUsers").document(userEmailText)
-            .get()
-            .addOnSuccessListener { document ->
-
-                if (document.data != null) {
-                    val passwordStored = document["password"].toString()
-                    val userEmailStored = document["emailAddress"].toString();
-                  
-                    if (checkPassword(userPasswordText, passwordStored)) {
-                        makeToast("Logged in. Welcome $userEmailStored")
-                        val intent = Intent(this, ProfileActivity::class.java)
-                        intent.putExtra("userEmailAddress", userEmailStored)
-                        startActivity(intent)
-                    } else {
-                        makeToast("Login failed. Try again")
-                    }
-
-                } else {
-                    makeToast("This user does not exist, Please register")
-                }
-            }
-
-            .addOnFailureListener { exception ->
-             Log.w(TAG, "Error getting documents: ", exception)
-
-            }
-    }*/
-
 
 //************************* Google login **********************************
 
@@ -228,7 +201,6 @@ class MainActivity : AppCompatActivity() {
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e)
-                // ...
             }
         } else if (requestCode == RequestCodes.requestCodeRegister) {
             Log.d(TAG, "Returned with e-mail address. Code is $requestCode")
@@ -254,7 +226,6 @@ class MainActivity : AppCompatActivity() {
                     Log.d(TAG, "User details: ${user?.email}")
                     Log.d(TAG, "User details: ${user?.photoUrl}")
 
-
                     val mru = MyRecipeUser(user?.displayName,"", user?.email,"","", user?.photoUrl )
                         //updateUI(user)
                   
@@ -269,17 +240,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
     }
-
-    private fun checkPassword(userPw: String, dbPw: String): Boolean = userPw == dbPw
-
-    /*override fun onStart() {
-        super.onStart()
-        val user = FirebaseAuth.getInstance().currentUser
-        if (user != null) {
-            startActivity(HomeActivity.getLaunchIntent(this))
-            finish()
-        }
-    }*/
 
     //Check to see if a user is already logged in via google. If so, log them in automatically
     fun makeToast(toastText :String) = Toast.makeText(applicationContext, toastText, Toast.LENGTH_LONG).show()

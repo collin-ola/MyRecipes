@@ -39,8 +39,6 @@ class RegistrationActivity : AppCompatActivity() {
 
             if (validate(mru)) {
                 createAccount(emailAddress!!, password!!)
-                returnResult(mru.emailAddress)
-                makeToast("User registration complete.")
             }
         }
     }
@@ -67,18 +65,17 @@ class RegistrationActivity : AppCompatActivity() {
     }
 
    private fun createAccount(emailAddress: String, password: String) {
-        var auth = FirebaseAuth.getInstance()
+        val auth = FirebaseAuth.getInstance()
         auth.createUserWithEmailAndPassword(emailAddress, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "createUserWithEmail:success")
-
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
-
+                    returnResult(emailAddress)
+                    makeToast("Registration Complete!")
                 }
-        }
+            }
+           .addOnFailureListener(this) {
+                makeToast("Error: ${it.message}")
+            }
     }
 }
