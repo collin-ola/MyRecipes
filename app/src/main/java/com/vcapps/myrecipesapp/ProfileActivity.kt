@@ -46,9 +46,7 @@ class ProfileActivity : AppCompatActivity() {
 
         testRecipe.uploadRecipe(userEmail)
         testRecipe.downloadRecipes(userEmail)
-
     }
 
     private fun makeToast(toastText :String) = Toast.makeText(applicationContext, toastText, Toast.LENGTH_LONG).show()
-
 }

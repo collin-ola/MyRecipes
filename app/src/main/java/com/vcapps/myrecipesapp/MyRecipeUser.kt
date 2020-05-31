@@ -20,8 +20,7 @@ class MyRecipeUser(var _username: String?, var _eMailAddress: String?, var _pass
     fun registerFacebookUser(accountType: String) { //types standard, google, facebook
         //Initialize database
         val db = Firebase.firestore
-        lateinit var user: HashMap<String, String>
-                user = hashMapOf(
+        val user: HashMap<String, String> = hashMapOf(
                     "name" to username,
                     "emailAddress" to emailAddress,
                     "photo" to photoUrl
@@ -34,7 +33,6 @@ class MyRecipeUser(var _username: String?, var _eMailAddress: String?, var _pass
                     .addOnFailureListener { e ->
                         Log.w(TAG, "Error adding document: ", e)
                     }
-
         }
     }
 

@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
                         val fbUser = MyRecipeUser(name,email,"","", Uri.parse(img))
                         fbUser.registerFacebookUser("facebook")
                     }
-                  
+
                     startActivity(facebookIntent)
 
                     val parameters = Bundle()
@@ -206,6 +206,7 @@ class MainActivity : AppCompatActivity() {
 
                     if (user != null) {
                         val intent = Intent(this, ProfileActivity::class.java)
+                        intent.putExtra("userEmailAddress", user.email)
                         startActivity(intent)
                     }
                 } else {
