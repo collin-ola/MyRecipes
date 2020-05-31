@@ -10,7 +10,6 @@ import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.GraphRequest
-import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -22,13 +21,10 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
-import org.json.JSONObject
-import java.util.*
 
 
 object RequestCodes {
     const val requestCodeOK = 0
-    //const val requestCodeNotOK = 1
     const val requestCodeSignIn = 2
     const val requestCodeRegister = 3
     const val requestCodeFacebook = 64206
@@ -57,8 +53,8 @@ class MainActivity : AppCompatActivity() {
                         val email = `object`.getString("email")
                         val img = `object`.getJSONObject("picture").getJSONObject("data").getString("url")
 
-                        val fbUser = MyRecipeUser(name,"",email,"","", Uri.parse(img))
-                        fbUser.registerUser("facebook")
+                        val fbUser = MyRecipeUser(name,email,"","", Uri.parse(img))
+                        fbUser.registerFacebookUser("facebook")
                     }
                   
                     startActivity(facebookIntent)
@@ -161,32 +157,6 @@ class MainActivity : AppCompatActivity() {
            }*/
    }
 
-//************************* Google login **********************************
-
-    private fun loginGoogle(mru: MyRecipeUser) {
-        //Create an instance of Firebase database
-        val db = Firebase.firestore
-
-        db.collection("myRecipeUsers").document(mru.emailAddress)
-            .get()
-            .addOnSuccessListener { document ->
-                if (document.data != null) {
-                    val userEmailStored = document["emailAddress"].toString();
-                    makeToast("User $userEmailStored will now be taken to their home page")
-                    //TODO: Take user to their home page, once it's been created
-                    val intent = Intent(this, ProfileActivity::class.java)
-                    startActivity(intent)
-                } else {
-                    //Register an account for the google user
-                    mru.registerUser("google")
-                    makeToast("Google user registration complete.")
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents: ", exception)
-            }
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -214,6 +184,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //**************** Google login ***********************
+
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
@@ -226,13 +198,12 @@ class MainActivity : AppCompatActivity() {
                     Log.d(TAG, "User details: ${user?.email}")
                     Log.d(TAG, "User details: ${user?.photoUrl}")
 
-                    val mru = MyRecipeUser(user?.displayName,"", user?.email,"","", user?.photoUrl )
-                        //updateUI(user)
-                  
+                    makeToast("Login Successful")
+
                     if (user != null) {
-                        loginGoogle(mru)
+                        val intent = Intent(this, ProfileActivity::class.java)
+                        startActivity(intent)
                     }
-                    makeToast("Authentication is successful. Welcome ${user?.displayName}")
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.exception)

@@ -26,7 +26,6 @@ class ProfileActivity : AppCompatActivity() {
 
         var userEmail: String? = intent.getStringExtra("userEmailAddress")
 
-        recipeListView(userEmail!!)
         makeToast("******Successful!!!!!!!******")
 
         val bmp = BitmapFactory.decodeResource(resources, R.drawable.profile)
@@ -53,28 +52,6 @@ class ProfileActivity : AppCompatActivity() {
                     Log.w(TAG, "Error adding document: ", e)
                 }
         }
-    }
-    fun recipeListView(userEmail:String){
-
-        recipeList = findViewById(R.id.recipe_list_view)
-        db.collection("myRecipes").document("French Toast")
-            .get()
-            .addOnSuccessListener { document ->
-
-                if (document.data != null) {
-                    val recipeTitle = document["Title"].toString()
-                    val recipeDesc = document["Description"].toString();
-
-                    makeToast("Got the Recipe! $recipeTitle")
-                } else {
-                    makeToast("This recipe does not exist.")
-                }
-            }
-
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents: ", exception)
-
-            }
     }
 
     fun makeToast(toastText :String) = Toast.makeText(applicationContext, toastText, Toast.LENGTH_LONG).show()

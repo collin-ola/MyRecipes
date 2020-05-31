@@ -6,9 +6,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class MyRecipeUser(var _name: String?, var _username: String?, var _eMailAddress: String?, var _password: String?, var _confirmPassword: String?, var _photoUrl: Uri? = null) {
+class MyRecipeUser(var _username: String?, var _eMailAddress: String?, var _password: String?, var _confirmPassword: String?, var _photoUrl: Uri? = null) {
 
-    var name = _name.toString()
     var username = _username.toString()
     var emailAddress = _eMailAddress.toString()
     var password = _password.toString()
@@ -17,23 +16,12 @@ class MyRecipeUser(var _name: String?, var _username: String?, var _eMailAddress
 
     private lateinit var auth: FirebaseAuth
 
-    fun registerUser(accountType: String) { //types standard, google, facebook
+    fun registerFacebookUser(accountType: String) { //types standard, google, facebook
         //Initialize database
         val db = Firebase.firestore
         lateinit var user: HashMap<String, String>
-
-        when (accountType) {
-            "google" -> {
                 user = hashMapOf(
-                    "name" to name,
-                    "emailAddress" to emailAddress,
-                    "photo" to photoUrl
-                )
-            }
-
-            "facebook" -> {
-                user = hashMapOf(
-                    "name" to name,
+                    "name" to username,
                     "emailAddress" to emailAddress,
                     "photo" to photoUrl
                 )
@@ -45,20 +33,7 @@ class MyRecipeUser(var _name: String?, var _username: String?, var _eMailAddress
                     .addOnFailureListener { e ->
                         Log.w(TAG, "Error adding document: ", e)
                     }
-            }
-
-
-            "standard" -> {
-                user = hashMapOf(
-                    "name" to name,
-                    "username" to username,
-                    "emailAddress" to emailAddress,
-                    "password" to password,
-                    "forgotten_pw" to "false"
-                )
-            }
 
         }
     }
 
-}

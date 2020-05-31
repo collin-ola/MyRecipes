@@ -13,7 +13,6 @@ const val TAG = "MRA"
 
 class RegistrationActivity : AppCompatActivity() {
 
-    private var name: String? = null
     private var username: String? = null
     private var emailAddress: String? = null
     private var password: String? = null
@@ -28,14 +27,13 @@ class RegistrationActivity : AppCompatActivity() {
 
         submitButton.setOnClickListener {
 
-            name = nameEditText.text.toString()
             username = usernameEditText.text.toString()
             emailAddress = emailEditText.text.toString()
             password = pwEditText.text.toString()
             confirmPassword = confirmPwEditText.text.toString()
 
             val mru =
-                MyRecipeUser(name!!, username!!, emailAddress!!, password!!, confirmPassword!!)
+                MyRecipeUser(username!!, emailAddress!!, password!!, confirmPassword!!)
 
             if (validate(mru)) {
                 createAccount(emailAddress!!, password!!)
