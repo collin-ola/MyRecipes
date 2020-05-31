@@ -238,17 +238,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkPassword(userPw: String, dbPw: String): Boolean = userPw == dbPw
 
-    /*override fun onStart() {
-        super.onStart()
-        val user = FirebaseAuth.getInstance().currentUser
-        if (user != null) {
-            startActivity(HomeActivity.getLaunchIntent(this))
-            finish()
-        }
-    }*/
-
     //Check to see if a user is already logged in via google. If so, log them in automatically
-    fun makeToast(toastText :String) = Toast.makeText(applicationContext, toastText, Toast.LENGTH_LONG).show()
+    private fun makeToast(toastText :String) = Toast.makeText(applicationContext, toastText, Toast.LENGTH_LONG).show()
 
 }
 
