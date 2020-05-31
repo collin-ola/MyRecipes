@@ -5,7 +5,7 @@ import android.util.Log
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class MyRecipeUser(var _name: String?, var _username: String?, var _eMailAddress: String?, var _password: String?, var _confirmPassword: String?, var _photoUrl: Uri? = null) {
+class MyRecipeUser(_name: String?, _username: String?, _eMailAddress: String?, _password: String?, _confirmPassword: String?, _photoUrl: Uri? = null) {
 
     var name = _name.toString()
     var username = _username.toString()
