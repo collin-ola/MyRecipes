@@ -6,15 +6,13 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.facebook.CallbackManager
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
-import com.facebook.GraphRequest
+import com.facebook.*
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
@@ -53,8 +51,9 @@ class MainActivity : AppCompatActivity() {
                         val email = `object`.getString("email")
                         val img = `object`.getJSONObject("picture").getJSONObject("data").getString("url")
 
-                        val fbUser = MyRecipeUser(name,email,"","", Uri.parse(img))
-                        fbUser.registerFacebookUser("facebook")
+                        //val fbUser = MyRecipeUser(name,email,"","", Uri.parse(img))
+                        //fbUser.registerFacebookUser("facebook")
+                        handleFacebookAccessToken(loginResult.accessToken)
                     }
 
                     startActivity(facebookIntent)
@@ -107,6 +106,25 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, ForgottenPassword::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun handleFacebookAccessToken(token: AccessToken?) {
+        Log.d(TAG, "handleFacebookAccessToken:$token")
+
+        val credential = FacebookAuthProvider.getCredential(token!!.token)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "signInWithCredential:success")
+                    makeToast("Facebook login successful.")
+                        //val user = auth.currentUser
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInWithCredential:failure", task.exception)
+                    makeToast("Authentication failed.")
+                }
+            }
     }
 
 

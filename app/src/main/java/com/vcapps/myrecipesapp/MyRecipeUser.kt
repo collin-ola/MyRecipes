@@ -21,18 +21,17 @@ class MyRecipeUser(var _username: String?, var _eMailAddress: String?, var _pass
         //Initialize database
         val db = Firebase.firestore
         val user: HashMap<String, String> = hashMapOf(
-                    "name" to username,
-                    "emailAddress" to emailAddress,
-                    "photo" to photoUrl
-                )
-                db.collection("myRecipeUsers").document(emailAddress)
-                    .set(user)
-                    .addOnSuccessListener {
-                        Log.d(TAG, "Document has been added")
-                    }
-                    .addOnFailureListener { e ->
-                        Log.w(TAG, "Error adding document: ", e)
-                    }
+            "name" to username,
+            "emailAddress" to emailAddress,
+            "photo" to photoUrl
+        )
+        db.collection("myRecipeUsers").document(emailAddress)
+            .set(user)
+            .addOnSuccessListener {
+                Log.d(TAG, "Document has been added")
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "Error adding document: ", e)
+            }
         }
     }
-
